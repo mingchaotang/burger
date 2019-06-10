@@ -9,6 +9,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       error: null
     };
 
+    //Generally, we recommend using the constructor() instead for initializing state.
     componentWillMount() {
       this.reqInterceptor = axios.interceptors.request.use(req => {
         this.setState({ error: null });
