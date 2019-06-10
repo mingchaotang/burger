@@ -144,7 +144,7 @@ class BurgerBuilder extends Component {
     let orderSummary = null;
 
     let burger = this.state.error ? (
-      <p style={{textAlign: 'center'}}>Ingredients can't be loaded!</p>
+      <p style={{ textAlign: 'center' }}>Ingredients can't be loaded!</p>
     ) : (
       <Spinner />
     );
