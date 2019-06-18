@@ -20,7 +20,7 @@ const Order = props => {
           display: 'inline-block',
           margin: '0 8px',
           padding: '5px',
-          border: '1px solid #ccc',
+          border: '1px solid #ccc'
         }}
       >
         {' '}
