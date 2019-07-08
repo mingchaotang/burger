@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckouSummary';
 import ContactData from './ContactData/ContactData';
@@ -34,7 +34,7 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    ttp: state.totalPrice,
+    ttp: state.totalPrice
   };
 };
 
