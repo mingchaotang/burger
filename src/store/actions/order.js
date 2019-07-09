@@ -18,7 +18,7 @@ export const purchaseBurgerFail = error => {
 
 export const purchaseBurgerStart = () => {
   return {
-    type: actionTypes.PURCHASE_BURDER_START
+    type: actionTypes.PURCHASE_BURGER_START
   };
 };
 
@@ -34,5 +34,11 @@ export const purchaseBurger = orderData => {
       .catch(error => {
         dispatch(purchaseBurgerFail(error));
       });
+  };
+};
+
+export const purchaseInit = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT
   };
 };
