@@ -23,6 +23,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false
       };
+    case actionTypes.PURCHASE_BURDER_START:
+      return {
+        ...state,
+        loading: true
+      };
     default:
       return state;
   }
