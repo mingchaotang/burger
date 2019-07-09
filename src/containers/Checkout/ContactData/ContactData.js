@@ -6,6 +6,8 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from '../ContactData/ContactData.css';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as orderActions from '../../../store/actions/index';
 
 class ContactData extends Component {
   state = {
@@ -96,7 +98,6 @@ class ContactData extends Component {
 
   orderHandler = event => {
     event.preventDefault();
-    this.setState({ loading: true });
 
     const formData = {};
     for (let formElementIdentifier in this.state.orderForm) {
@@ -110,7 +111,8 @@ class ContactData extends Component {
       price: this.props.ttp,
       orderData: formData
     };
-    console.log(formData);
+
+    this.props.onPurchaseBurger(order);
   };
 
   checkValidity = (value, rules) => {
@@ -206,4 +208,14 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+  return {
+    onPurchaseBurger: orderData =>
+      dispatch(orderActions.purchaseBurgerStart(orderData))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(ContactData, axios));
