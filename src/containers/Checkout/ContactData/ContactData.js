@@ -111,16 +111,6 @@ class ContactData extends Component {
       orderData: formData
     };
     console.log(formData);
-
-    axios
-      .post('/orders.json', order)
-      .then(response => {
-        this.setState({ loading: false });
-        this.props.history.push('/');
-      })
-      .catch(error => {
-        this.setState({ loading: false });
-      });
   };
 
   checkValidity = (value, rules) => {
