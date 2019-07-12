@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import classes from './Auth.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import * as actions from '../../store/actions/index';
 
 class Auth extends Component {
   state = {
@@ -77,12 +79,23 @@ class Auth extends Component {
       [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
-        valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+        valid: this.checkValidity(
+          event.target.value,
+          this.state.controls[controlName].validation
+        ),
         touched: true
       }
     };
 
     this.setState({ controls: updatedControls });
+  };
+
+  submitHandler = event => {
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value
+    );
   };
 
   render() {
@@ -95,32 +108,35 @@ class Auth extends Component {
     }
 
     let form = (
-        <form onSubmit={this.submitHandler}>
-          {formElementsArray.map(formElement => (
-              <Input
-                  key={formElement.id}
-                  elementType={formElement.config.elementType}
-                  elementConfig={formElement.config.elementConfig}
-                  value={formElement.config.value}
-                  valueType={formElement.id}
-                  invalid={!formElement.config.valid}
-                  shouldValidate={formElement.config.validation}
-                  touched={formElement.config.touched}
-                  changed={event => this.inputChangedHandler(event, formElement.id)}
-              />
-          ))}
-          <Button btnType="Success" disabled={!this.state.formIsValid}>
-            Submit
-          </Button>
-        </form>
+      <form onSubmit={this.submitHandler}>
+        {formElementsArray.map(formElement => (
+          <Input
+            key={formElement.id}
+            elementType={formElement.config.elementType}
+            elementConfig={formElement.config.elementConfig}
+            value={formElement.config.value}
+            valueType={formElement.id}
+            invalid={!formElement.config.valid}
+            shouldValidate={formElement.config.validation}
+            touched={formElement.config.touched}
+            changed={event => this.inputChangedHandler(event, formElement.id)}
+          />
+        ))}
+        <Button btnType="Success">Submit</Button>
+      </form>
     );
 
-    return (
-      <div className={classes.Auth}>
-        {form}
-      </div>
-    );
+    return <div className={classes.Auth}>{form}</div>;
   }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Auth);

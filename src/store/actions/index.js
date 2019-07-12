@@ -10,3 +10,5 @@ export {
   fetchOrders,
   deleteOrder
 } from '../actions/order';
+
+export { auth } from '../actions/auth';
