@@ -1,5 +1,7 @@
+import axios from 'axios';
+
 import * as actionTypes from './actionTypes';
-import axios from '../../axios-orders';
+import { deleteOrderFail, deleteOrderSuccess } from './order';
 
 export const authStart = () => {
   return {
@@ -24,5 +26,23 @@ export const authFail = error => {
 export const auth = (email, password) => {
   return dispatch => {
     dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true
+    };
+    axios
+      .post(
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCBBiKq6SgtD8eI9VbdH4jtlIx52Fz4984',
+        authData
+      )
+      .then(response => {
+        console.log(response);
+        dispatch(authSuccess(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(authFail(error));
+      });
   };
 };
