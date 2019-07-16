@@ -22,11 +22,11 @@ export const purchaseBurgerStart = () => {
   };
 };
 
-export const purchaseBurger = orderData => {
+export const purchaseBurger = (orderData, token) => {
   return dispatch => {
     dispatch(purchaseBurgerStart());
     axios
-      .post('/orders.json', orderData)
+      .post('/orders.json?auth=' + token, orderData)
       .then(response => {
         dispatch(purchaseBurgerSuccess(response.data.name, orderData));
       })
@@ -62,11 +62,11 @@ export const fetchOrdersStart = () => {
   };
 };
 
-export const fetchOrders = orderData => {
+export const fetchOrders = token => {
   return dispatch => {
     dispatch(fetchOrdersStart());
     axios
-      .get('/orders.json')
+      .get('/orders.json?auth=' + token)
       .then(res => {
         let fetchedOrders = [];
         for (let key in res.data) {
@@ -103,12 +103,13 @@ export const deleteOrderStart = () => {
   };
 };
 
-export const deleteOrder = orderId => {
+export const deleteOrder = (orderId, token) => {
   return dispatch => {
     dispatch(deleteOrderStart());
     axios
-      .delete('/orders/' + orderId + '.json')
+      .delete('/orders/' + orderId + '.json?auth=' + token)
       .then(response => {
+        console.log(response.data);
         dispatch(deleteOrderSuccess(orderId));
       })
       .catch(error => {
