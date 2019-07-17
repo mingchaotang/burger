@@ -11,4 +11,4 @@ export {
   deleteOrder
 } from '../actions/order';
 
-export { auth, authLogout } from '../actions/auth';
+export { auth, authLogout, setAuthRedirectPath } from '../actions/auth';
