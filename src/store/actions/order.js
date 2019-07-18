@@ -111,7 +111,7 @@ export const deleteOrder = (orderId, token) => {
     axios
       .delete('/orders/' + orderId + '.json?auth=' + token)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(deleteOrderSuccess(orderId));
       })
       .catch(error => {
