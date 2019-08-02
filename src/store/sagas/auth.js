@@ -1,11 +1,11 @@
-import { put, delay } from 'redux-saga/effects';
+import { put, delay, call } from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from 'axios';
 
-export function* authLogoutSaga(action) {
-  yield localStorage.removeItem('token');
-  yield localStorage.removeItem('userId');
-  yield localStorage.removeItem('expirationDate');
+export function* authLogoutSaga() {
+  yield call([localStorage, 'removeItem'], 'token');
+  yield call([localStorage, 'removeItem'], 'userId');
+  yield call([localStorage, 'removeItem'], 'expirationDate');
   yield put(actions.authLogoutSuccess());
 }
 
@@ -40,7 +40,7 @@ export function* authUserSaga(action) {
     );
     yield put(actions.checkAuthTimeout(response.data.expiresIn));
   } catch (error) {
-    yield actions.authFail(error.response.data.error.message);
+    yield put(actions.authFail(error.response.data.error.message));
   }
 }
 
